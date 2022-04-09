@@ -1,0 +1,45 @@
+{
+  "name": "homestate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@mapbox/mapbox-gl-geocoder": "^4.7.4",
+    "@react-native-mapbox-gl/maps": "^8.6.0-beta.0",
+    "@react-native-picker/picker": "^2.3.1",
+    "@react-navigation/bottom-tabs": "^6.2.0",
+    "@react-navigation/drawer": "^6.3.1",
+    "@react-navigation/native": "^6.0.8",
+    "expo": "~44.0.2",
+    "expo-splash-screen": "~0.14.1",
+    "expo-status-bar": "~1.2.0",
+    "mapbox-gl": "^2.7.0",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-hook-form": "^7.28.0",
+    "react-map-gl": "^7.0.8",
+    "react-map-gl-geocoder": "^2.2.0",
+    "react-native": "0.64.3",
+    "react-native-autoheight-webview": "^1.6.1",
+    "react-native-elements": "^3.4.2",
+    "react-native-gesture-handler": "^2.2.0",
+    "react-native-get-location": "^2.2.1",
+    "react-native-paper": "^4.12.0",
+    "react-native-paper-form-builder": "^2.1.2",
+    "react-native-reanimated": "^2.4.1",
+    "react-native-safe-area-context": "^3.4.0",
+    "react-native-screens": "^3.11.1",
+    "react-native-vector-icons": "^9.1.0",
+    "react-native-web": "0.17.1",
+    "react-native-webview": "^11.17.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9"
+  },
+  "private": true
+}
