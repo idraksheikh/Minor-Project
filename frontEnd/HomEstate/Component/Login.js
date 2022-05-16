@@ -1,131 +1,209 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image,Button} from 'react-native';
-import {FormBuilder} from 'react-native-paper-form-builder';
-import {useForm} from 'react-hook-form';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { configureFonts, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-import {Checkbox} from 'react-native-paper';
-import navigationStrings from './Constraints/navigationStrings';
-import {Home}  from './Screens/Index';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, ScrollView, Text, Image,Button,Alert} from 'react-native';
+import {TextInput,Checkbox} from 'react-native-paper';
+import imagePath from './Constraints/imagePath';
+import {useDispatch, useSelector} from "react-redux";
+import {login_check} from '../Slices/userSlice';
+import validator from "../utils/validation";
+import {showError} from "../utils/dispError";
+
 
 
 const Login=({navigation})=> {
   
   // const [isSelected, setSelection] = useState(false);
   const [checked, setChecked] = useState(false);
+ 
   
-  const {control, setFocus, handleSubmit} = useForm({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-    mode: 'onChange',
-  });
-  // const navigationOptions = ({navigation}) => { // use {} to object destructuring
-  //   return {
-  //       title: 'Review Jobs',
-  //       headerRight: (<Title onPress={()=>{navigation.navigate(navigationStrings.HOME)}}>Settings</Title>)
-  //   };
+  const [secCheckPass,setSecCheckPass]=useState(true);
+  const [passicon,setPassicon]=useState('eye');
+
+  //redux
+  const dispatch=useDispatch();
+  const {isAuth,message}=useSelector((state)=> state.userinformation);
   
+  //TextInput
+  const [email,setEmail]=useState('');
+  const [password,setPassword]=useState('');
+
+   
+  
+ 
+  const ValidData=()=>{
+    const error=validator(
+      {
+        email,
+        password,
+      })
+      if(error){
+        showError(error);
+        return false;
+      }
+      else{
+        return true;
+      }
+  }
+ 
+
+  const ValidAndSubmit=()=>{
+    
+    const checkvalidation=ValidData();
+    if(checkvalidation){
+      if(checked){
+        handlePress();
+      }else{
+        showError("Please accept the terms and condition")
+      }
+      
+    }
+  }
+  const handlePress=async()=>{
+       dispatch(login_check({email,password})); 
+       
+  }
+  
+  useEffect(()=>{
+    if(isAuth===true){
+      Alert.alert(
+        "Congratulation",
+        "Login Successfull",
+        [
+         
+            { text: "OK", onPress: () => {navigation.navigate('BottomTabs');} }
+          
+        ]) 
+    }
+    else if(message==="User not found"){
+      alert("User Not Found.");
+      
+    }
+    else if(message==="Incorrect Password"){
+      alert("Incorrect Password.");
+    }
+  
+  },[dispatch,isAuth,message])
   return (
     <View style={styles.containerStyle}>
       <ScrollView contentContainerStyle={styles.scrollViewStyle}>
-        <Text style={styles.headingStyle}>Welcome</Text>
+        <Image source={imagePath.logo} style={styles.logo}/>
+        <Text style={styles.headingStyle}>LOGIN</Text>
         <Text style={styles.text}>Sign in to continue...</Text>
-        <FormBuilder
-          control={control}
-          setFocus={setFocus}
-          formConfigArray={[
-            {
-              type: 'email',
-              name: 'email',
+       
 
-              rules: {
-                required: {
-                  value: true,
-                  message: 'Email is required',
-                },
-                pattern: {
-                  value:
-                    /[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})/,
-                  message: 'Email is invalid',
-                },
-              },
-              textInputProps: {
-                label: 'Email',
-              },
-            },
-            {
-              type: 'password',
-              name: 'password',
-              rules: {
-                required: {
-                  value: true,
-                  message: 'Password is required',
-                },
-              },
-              textInputProps: {
-                label: 'Password',
-              },
-            },
-          ]}
-        />
+   
+          <TextInput
+            mode="outlined"
+            label="Email"
+            placeholder='Enter your Email' 
+            value={email} 
+            onChangeText={(email)=>{setEmail(email)}} 
+            left={<TextInput.Icon name="email"/>}
+            
+           
+          />
+          <TextInput 
+            mode="outlined"
+            label="Password"
+            secureTextEntry={secCheckPass} 
+            placeholder='Enter your Password'
+            value={password}
+            onChangeText={(password)=>{setPassword(password)}}
+            left={<TextInput.Icon name="lock"/>}
+            right={<TextInput.Icon name={passicon} 
+            onPress={()=>{
+              setSecCheckPass(!(secCheckPass));
+              if(passicon==='eye'){
+                setPassicon('eye-off');
+              }else{
+                setPassicon('eye');
+              }
+              }}/>}
+            
+          />
+         
+        
         <View style={{flexDirection: 'row'}}>       
           <Checkbox
           status={checked ? 'checked' : 'unchecked'}
-          // value={isSelected}
-          // onValueChange={setSelection}
+         
           onPress={() => {
           setChecked(!checked);
            }}
-         /><Text style={{color: 'blue', fontSize: 14}}>Accept the Terms and Conditions: {checked ? "👍" : "👎"}</Text>
+         /><Text 
+         style={{color: 'blue', fontSize: 14,marginTop:6,}}
+         onPress={()=>{
+          {Alert.alert(
+          "Terms and Conditions",
+          "The email you entered may be visible to the other user.",
+          [
+           
+              { text: "OK",}
+            
+          ]) }
+         }}
+         >
+         Accept the Terms and Conditions: {checked ? "👍" : "👎"}
+         </Text>
          
         </View>
-        {/* <TouchableOpacity
-         mode={'contained'}
-         onPress={()=>{navigation.navigate(Home)}}
-          activeOpacity={1}
-          style={styles.button}
-        >
-           <Image source={imagePath.house3} style={{height: 40, width: 80, marginLeft: 2.5}} />
-        </TouchableOpacity> */}
-        <Button title='Submit'  onPress= {()=>{navigation.navigate('Home')}}/>
+        <View style={{flexDirection: 'row',padding:10,}}>     
+        <Text style={{color: 'black', fontSize: 14}} >Don't have an account ? </Text>
+        <Text style={{color: 'blue', fontSize: 14,textDecorationLine: 'underline',}} onPress={()=>{navigation.navigate("Signup")}}> Signup </Text>
+        </View>
+         <Button title='Login' onPress={ValidAndSubmit}/>
+        
+        
      
       </ScrollView>
-    </View>
+      </View>
   );
 }
 
 const styles = StyleSheet.create({
   containerStyle: {
     flex: 1,
+    backgroundColor:'#F3E9DD',  
+    
+  },
+  linearGradient: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 5,
   },
   scrollViewStyle: {
-    flex: 1,
-    padding: 15,
+    margin:10,  
+    padding: 10,
     justifyContent: 'center',
   },
+  
+  logo:{
+    alignSelf:'center',
+  },
   headingStyle: {
-    fontSize: 50,
+    color:'darkgreen',
+    fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 40,
+    margin:20,
     textShadowRadius: 9,
     textShadowColor: '#FFFBF4',
   },
+ 
   text: {
-    fontSize: 15,
-    textShadowRadius: 2,
+    fontSize: 14,
+    fontFamily: 'Gill Sans',
+    textAlign: 'auto',
+    margin: 3,
+    color: '#112B3C',
+    backgroundColor: 'transparent',
   },
-  button: {
-    height: 38,
-    width: 85,
-    justifyContent: 'center',
-    textAlign: 'center',
-    alignSelf: 'center',
-    borderRadius: 6,
-    opacity: 0.8
+
+  button2: {
+   marginTop:10,
   },
+  
+ 
 });
 
 export default Login;

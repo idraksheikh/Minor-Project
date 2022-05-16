@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {Text, StyleSheet, View, TextInput, Button, Image, ImageBackground, ScrollView} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import imagePath from '../../Constraints/imagePath';
+import {useDispatch, useSelector} from "react-redux";
+import { selling_property } from '../../../Slices/sellingSlice';
 
 
 import Tiles from '../Buy/Tiles.js';
@@ -10,29 +12,18 @@ import Tiles from '../Buy/Tiles.js';
   let sellDetails;
   let flag=0;
 const Form = () => {
-  const [sellForm, setSellForm] = useState({});
-  const [username, setUsername] = useState();
+  const dispatch=useDispatch();
+  const {message,status}=useSelector((state)=> state.sellingproperty);
+  const [ownername, setOwnername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [location, setLocation] = useState();
   const [currency, setCurrency] = useState("US Dollars");
-  const  onFormSubmit=(e)=>{
-      setSellForm(()=>{
-          return {
-            id:(new Date().getUTCMilliseconds()).toString(),
-            username,
-            email,
-            password,
-            location,
-            currency,
-            
-          }
-          
-      });
-     sellDetails=sellForm;
-     
+  const  onFormSubmit=()=>{
+    dispatch(selling_property({ownername,email,location}));
+    console.log(message,status);
   }
-  
+        
   return (
     <>
      <ImageBackground source={imagePath.house3} style={styles.container}>
@@ -44,8 +35,8 @@ const Form = () => {
        
           placeholder="Name"        
           style={styles.inputStyle}         
-          value={username}         
-          onChangeText={uname => setUsername(uname)} 
+          value={ownername}         
+          onChangeText={uname => setOwnername(uname)} 
           
         />
         <TextInput 
@@ -93,7 +84,7 @@ const Form = () => {
         <Button
           title="Submit"
           color="blue"
-          onPress={e=>onFormSubmit(e)}
+          onPress={onFormSubmit}
 
         />
       </View>

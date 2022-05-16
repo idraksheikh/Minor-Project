@@ -9,4 +9,5 @@ export default{
     house1:require('../../Asset/Images/house1.png'),
     house2:require('../../Asset/Images/house2.png'),
     house3:require('../../Asset/Images/house3.png'),
+    
 }

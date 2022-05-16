@@ -1,4 +1,5 @@
-const User=require("../models/User")
+const User=require("../models/User");
+const ErrorHandler=require("../utils/ErrorHandler");
 exports.register = async (req,res)=>{
         try {
             const {name, email, password }=req.body;
@@ -7,7 +8,7 @@ exports.register = async (req,res)=>{
                 return res
                 .status(400)
                 .json({
-                    success:false, message:"User already exists"
+                    success:false, message:"User already exists",
                 });
             }
             user=await User.create({
@@ -36,27 +37,18 @@ exports.register = async (req,res)=>{
             });
         }
 }
-exports.login=async (req,res)=>{
+exports.login= async (req,res,next)=>{
     try {
         const {email,password}=req.body;
         const user=await User.findOne({email}).select("+password");
     
     if(!user){
-        res
-        .status(400)
-        .json({
-            success:false,
-            message:"User does not exist."
-        });
+        return next(new ErrorHandler("User not found", 400))
+        
     }
     const isMatch= await user.matchPassword(password);
     if(!isMatch){
-        res
-        .status(400)
-        .json({
-            success:false,
-            message:"Incorrect password."
-        });
+        return next(new ErrorHandler("Incorrect Password", 400))
     }
     const token=await user.generateToken();
     res.cookie("accessToken", token, {
@@ -70,14 +62,8 @@ exports.login=async (req,res)=>{
         token
     }); 
     } catch (error) {
-        res
-        .status(500)
-        .json({
-            success:false,
-            message:error.message
-        }); 
+        return next(new ErrorHandler(error.message, 500))
     }
-   
 }
 exports.logout=async (req,res)=>{
     try {
@@ -96,7 +82,7 @@ exports.logout=async (req,res)=>{
          message:error.message
      })
     }
-}
+} 
 exports.resetpassword=async(req,res)=>{
     try {
         const user=User.findById(req.user._id);
@@ -110,6 +96,7 @@ exports.resetpassword=async(req,res)=>{
                 message:"Incorrect password"
             })
         }
+        
     } catch (error) {
         res
         .status(500)

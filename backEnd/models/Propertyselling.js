@@ -1,7 +1,7 @@
 const mongoose  = require("mongoose");
 
 const SellingSchema= new mongoose.Schema({
-    ownerName:{
+    ownername:{
         type:String,
         required:[true,"Field can not be empty"],
 
@@ -9,6 +9,7 @@ const SellingSchema= new mongoose.Schema({
     location:{
         type:String,
         required:[true,"Field can not be empty"],
+        unique:[true,"This property already exists."],
     },
     email:{
         type:String,
@@ -28,6 +29,14 @@ const SellingSchema= new mongoose.Schema({
     },
     area:{
         type:Number,
+        required:[true,"Field can not be empty"],
+    },
+    city:{
+        type:String,
+        required:[true,"Field can not be empty"],
+    },
+    state:{
+        type:String,
         required:[true,"Field can not be empty"],
     },
     image:{
