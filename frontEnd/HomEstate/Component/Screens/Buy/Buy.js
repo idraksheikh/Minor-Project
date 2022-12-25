@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {  View, Image, Text,StyleSheet,Alert } from 'react-native';
 import navigationStrings from '../../Constraints/navigationStrings';
-import Header from '../Header';
+import Header from '../Headers';
 import Tiles from './Tiles';
 import {useDispatch} from "react-redux";
 import { logout } from '../../../Slices/userSlice';

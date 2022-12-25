@@ -95,7 +95,7 @@ export default function Tiles({match}) {
     }}}
        
      />
-      <Button mode="text"  onPress={ValidAndSubmit} > Search</Button>
+      <Button mode="text" style={styles.buttons} onPress={ValidAndSubmit} > Search</Button>
      </View>
     
      {property && property.map((properties)=>(
@@ -103,21 +103,17 @@ export default function Tiles({match}) {
        <Card  style={styles.mainCard} key={properties._id} >
        <Card.Cover source={{ uri: properties.image.url }} style={styles.cardCover} />
         <Card.Content>
-        <Title style={styles.cardTitle}>{properties.location}</Title>
-        <Text style={styles.cardKey}>Description:</Text>
-        <Paragraph style={styles.cardPara}>
+        <Text style={styles.address}>Address :</Text>
+        <Title style={styles.cardTitle}>{properties.location}, {properties.city}, {properties.state}</Title>
         
-        {properties.description}
-        </Paragraph>
-
-        <Text style={styles.cardKey}> Price:</Text><Text style={styles.cardVal}> ₹ { properties.price} Lakhs </Text>
-        <Text style={styles.cardKey}> City :</Text><Text style={styles.cardVal}> { properties.city} </Text>
-        <Text style={styles.cardKey}> Area :</Text><Text style={styles.cardVal}> { properties.area} Sq. Ft. </Text>
+        <Text style={styles.cardKey}>Price:</Text><Text style={styles.cardVal}> ₹ { properties.price} Lakhs </Text>
+        <Text style={styles.cardKey}>City :</Text><Text style={styles.cardVal}> { properties.city} </Text>
+        <Text style={styles.cardKey}>Area :</Text><Text style={styles.cardVal}> { properties.area} Sq. Ft. </Text>
       </Card.Content>
      
       <Card.Actions style={styles.cardActions} >
       
-      <Button  style={styles.cardButton} onPress={() => {
+      <Button  style={styles.cardButton1} onPress={() => {
             Alert.alert(
             "Email Request",
             "If you want to buy this estate you can send a request mail to the seller.",
@@ -131,6 +127,16 @@ export default function Tiles({match}) {
             ]
           );    
           }}>Buy</Button>
+      <Button  style={styles.cardButton2} onPress={() => {
+            Alert.alert(
+            "Description",
+            properties.description,
+            [
+              
+              { text: "OK", onPress: () => { console.log("description closed.")} }
+            ]
+          );    
+          }}>Description</Button>    
     </Card.Actions>
   </Card>
        
@@ -147,25 +153,31 @@ export default function Tiles({match}) {
     );
 }
 const styles = StyleSheet.create({
+  scrollViewStyle:{
+    margin:10,
+  },
   containerStyle: {
     flex: 1,
-    backgroundColor:'#F3E9DD',  
+    backgroundColor:'#4c669f',  
+    
     
   },
+  
   mainCard:{
-    margin:3,
-    borderRadius:10,
+    margin:10,
+    borderRadius:20,
     padding:2,
+    elevation:20,
   },
   cardCover:{
-    margin:7,
-    borderRadius:10,
+    margin:10,
+    borderRadius:20,
   },
   cardTitle:{
-    fontSize:20,
+    fontSize:15,
   },
   cardKey:{
-    fontSize:13,
+    fontSize:14,
     fontWeight:'bold',
     textAlign:'left',
   },
@@ -173,20 +185,39 @@ const styles = StyleSheet.create({
     fontSize:15,
   },
   cardVal:{
-    fontSize:13,
+    fontSize:14,
     fontWeight:'bold',
     textAlign:'right',
     marginTop:-15,
     
   },
-  cardButton:{
+  address:{
+    fontSize:14,
+    fontWeight:'bold',
+    textAlign:'left',
+  },
+  cardButton1:{
     
     
     borderWidth:2,
     borderColor:'#764AF1',
     borderRadius:5,
-    height:45,
-    width:70,
+    height:40,
+    width:60,
+    fontSize:8,
+    elevation:20,
+  },
+  cardButton2:{
+    
+    elevation:20,
+    borderWidth:2,
+    borderColor:'#764AF1',
+    borderRadius:5,
+    height:40,
+    width:120,
+    fontSize:8,
+    marginLeft:10,
+    
   },
   cardActions:{
     alignContent:'center',
@@ -213,7 +244,9 @@ textbox:{
   alignItems:'center',
   
 },
-btn:{
-  color:'red',
+buttons:{
+  backgroundColor:'#ffffff',
+  marginTop:10,
+  elevation:20,
 },
 });

@@ -41,7 +41,7 @@ export default function Map(){
   const styles = StyleSheet.create({
     containerStyle: {
       flex: 1,
-      backgroundColor:'#F3E9DD',  
+      backgroundColor:'#4c669f',  
       
     },
     scrollViewStyle: {

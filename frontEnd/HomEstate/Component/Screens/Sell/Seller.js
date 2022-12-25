@@ -328,7 +328,7 @@ function Seller() {
 const styles = StyleSheet.create({
   containerStyle: {
     flex: 1,
-     backgroundColor:'#F3E9DD',
+     backgroundColor:'#4c669f',
       
     
   },
@@ -344,7 +344,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headingStyle: {
-    color:'darkgreen',
+    color:'#ffffff',
     fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Gill Sans',
     textAlign: 'auto',
     margin: 3,
-    color: '#112B3C',
+    color: '#ffffff',
     backgroundColor: 'transparent',
   },
   button: {
@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'center',
     borderRadius: 6,
-    opacity: 0.8
+    opacity: 0.8,
   },
 });
 

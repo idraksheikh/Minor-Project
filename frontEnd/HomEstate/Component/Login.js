@@ -147,10 +147,10 @@ const Login=({navigation})=> {
          
         </View>
         <View style={{flexDirection: 'row',padding:10,}}>     
-        <Text style={{color: 'black', fontSize: 14}} >Don't have an account ? </Text>
+        <Text style={{color: '#ffffff', fontSize: 14}} >Don't have an account ? </Text>
         <Text style={{color: 'blue', fontSize: 14,textDecorationLine: 'underline',}} onPress={()=>{navigation.navigate("Signup")}}> Signup </Text>
         </View>
-         <Button title='Login' onPress={ValidAndSubmit}/>
+         <Button title='Login' style={{backgroundColor:'#4c669f',}} onPress={ValidAndSubmit}/>
         
         
      
@@ -162,9 +162,15 @@ const Login=({navigation})=> {
 const styles = StyleSheet.create({
   containerStyle: {
     flex: 1,
-    backgroundColor:'#F3E9DD',  
+    backgroundColor:'#4c669f',  
+    
     
   },
+  button2: {
+    marginTop:20,
+    backgroundColor:'#4c669f',
+    
+   },
   linearGradient: {
     flex: 1,
     paddingLeft: 15,
@@ -173,6 +179,7 @@ const styles = StyleSheet.create({
   },
   scrollViewStyle: {
     margin:10,  
+    marginTop:100,
     padding: 10,
     justifyContent: 'center',
   },
@@ -181,7 +188,7 @@ const styles = StyleSheet.create({
     alignSelf:'center',
   },
   headingStyle: {
-    color:'darkgreen',
+    color:'#ffffff',
     fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -195,13 +202,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Gill Sans',
     textAlign: 'auto',
     margin: 3,
-    color: '#112B3C',
+    color: '#ffffff',
     backgroundColor: 'transparent',
   },
 
-  button2: {
-   marginTop:10,
-  },
+  
   
  
 });

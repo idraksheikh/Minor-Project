@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {  View, Image, Text,StyleSheet,Alert,ScrollView } from 'react-native';
-import Header from '../Header';
+import Header from '../Headers';
 import Map from './Map';
 import {useDispatch} from "react-redux";
 import { logout } from '../../../Slices/userSlice';
